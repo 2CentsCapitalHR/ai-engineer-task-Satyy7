@@ -67,7 +67,7 @@ experience.
 
 -   Python 3.10+
 -   Google Gemini API Key (store in `.env` as `GEMINI_API_KEY`)
--   ChromaDB persistent storage directory (`data_sources/chroma_store`)
+
 
 ### 2️⃣ Clone the Repository
 
