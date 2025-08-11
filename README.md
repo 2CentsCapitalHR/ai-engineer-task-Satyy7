@@ -15,6 +15,36 @@ experience.
 
 ------------------------------------------------------------------------
 
+## Retrieval-Augmented Generation (RAG) in This Project
+
+This system uses **Retrieval-Augmented Generation (RAG)** to ensure all AI-driven compliance checks are grounded in **official ADGM reference documents** rather than relying solely on the model’s internal knowledge. This greatly increases accuracy, transparency, and explainability.
+
+### How RAG Works Here
+1. **Document Ingestion**  
+   All official ADGM legal templates, regulations, and process guidelines are stored in a **ChromaDB** vector database. These references are converted into embeddings using the Google Gemini embedding API.
+
+2. **Retrieval Phase**  
+   When a user uploads a `.docx` document, the system:
+   - Extracts the text.
+   - Converts it into embeddings.
+   - Retrieves the most semantically similar clauses, sections, or templates from the ChromaDB reference store.
+
+3. **Generation Phase**  
+   The retrieved reference materials are combined with the uploaded document’s text and sent to **Google Gemini**. This augmented context allows the model to:
+   - Classify the document type.
+   - Verify compliance with ADGM regulations.
+   - Detect red flags.
+   - Suggest clause modifications based on the most relevant legal references.
+
+4. **Inline Commenting & Reporting**  
+   The model’s findings are added directly as **inline comments in the DOCX file**, each comment citing the specific ADGM reference that triggered it. A downloadable JSON compliance report is also generated.
+
+### Why RAG?
+- **Improved Accuracy**: Ensures recommendations are based on the latest ADGM legal content.
+- **Explainability**: All AI outputs are backed by direct references.
+- **Adaptability**: Updating the ChromaDB store with new regulations instantly updates the system without retraining the model.
+
+------------------------------------------------------------------------
 ## Key Features
 
 -   **Automatic Document Classification**\
@@ -131,12 +161,6 @@ Uploads `.docx` files for analysis.
 ``` bash
 curl -X POST "http://127.0.0.1:8000/review"   -F "files=@/path/to/document.docx"
 ```
-
-------------------------------------------------------------------------
-
-## Flow Diagram (Insert Below)
-
-![alt text](Flowchat(RAG).drawio-2.png)
 ------------------------------------------------------------------------
 
 ## Output Files
